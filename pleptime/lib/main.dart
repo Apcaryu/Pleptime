@@ -30,6 +30,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  dynamic _startTime = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +39,27 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-
+          child: Column(
+            children: [
+              Text(_startTime.toString()),
+              IconButton(onPressed: () {
+                setState(() {
+                  _startTime = getTime();
+                });
+              },
+                  icon: const Icon(Icons.info)
+              ),
+            ],
+          ),
       ),
     );
   }
+}
+
+dynamic getTime() {
+  final minutes = DateTime.now().minute;
+  final hour = DateTime.now().hour;
+  final total = (hour * 60) + minutes;
+
+  return total;
 }
