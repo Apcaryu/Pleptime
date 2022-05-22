@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Flutter Demo',
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Pleptime'),
     );
   }
 }
@@ -27,6 +27,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _inThePlace = false;
+  dynamic _iconButton = Icons.login;
   dynamic _startTime = 0;
 
   @override
@@ -43,10 +45,19 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(_startTime.toString()),
               IconButton(onPressed: () {
                 setState(() {
+                  if (_inThePlace) {
+                    _iconButton = Icons.logout;
+                    _inThePlace = false;
+                  }
+                  else {
+                    _iconButton = Icons.login;
+                    _inThePlace = true;
+                  }
+                  //_iconButton = Icons.logout;
                   _startTime = getTime();
                 });
               },
-                  icon: const Icon(Icons.info)
+                  icon: Icon(_iconButton)
               ),
             ],
           ),
