@@ -10,12 +10,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -36,6 +33,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: ColorTheme()._mainColor,
+        foregroundColor: ColorTheme()._secondaryColor,
         title: Text(widget.title),
       ),
       body: Center(
@@ -62,4 +61,10 @@ dynamic getTime() {
   final total = (hour * 60) + minutes;
 
   return total;
+}
+
+class ColorTheme {
+  final _mainColor = Colors.black;
+  final _secondaryColor = Colors.white;
+  final _feedbackColor = Colors.deepOrange;
 }
