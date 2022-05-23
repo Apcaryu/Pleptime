@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:localstore/localstore.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 void main() {
   runApp(const MyApp());
@@ -11,17 +12,81 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
-      home: MyHomePage(title: 'Pleptime'),
+      home: MyHomePage(title: 'Pleptime', storage: TimeStorage(),),
     );
   }
 }
 
+class TimeStorage {
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+
+    return directory.path;
+  }
+
+  // get file location
+  Future<File> get _startTimeFile async {
+    final path = await _localPath;
+    return File('$path/startTime.txt');
+  }
+
+  Future<File> get _totalTimeFile async {
+    final path = await _localPath;
+    return File('$path/totalTime.txt');
+  }
+
+  // read files
+  Future<int> readStartFile() async {
+    try {
+      final startFile = await _startTimeFile;
+
+      // Read the file
+      final contents = await startFile.readAsString();
+
+      return int.parse(contents);
+    } catch (e) {
+      // If encountering an error, return 0
+      return 0;
+    }
+  }
+
+  Future<double> readTotalFile() async {
+    try {
+      final totalFile = await _totalTimeFile;
+
+      // Read the file
+      final contents = await totalFile.readAsString();
+
+      return double.parse(contents);
+    } catch (e) {
+      // If encountering an error, return 0
+      return 0;
+    }
+  }
+
+  // write files
+  Future<File> writeStartTime(int time) async {
+    final file = await _startTimeFile;
+
+    // Write the file
+    return file.writeAsString('$time');
+  }
+
+  Future<File> writeTotalTime(double time) async {
+    final file = await _totalTimeFile;
+
+    // Write the file
+    return file.writeAsString('$time');
+  }
+}
+
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title, required this.storage});
 
   final String title;
+  final TimeStorage storage;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -32,7 +97,38 @@ class _MyHomePageState extends State<MyHomePage> {
   dynamic _iconButton = Icons.login;
   dynamic _startTime = 0;
   dynamic _endTime = 0;
-  dynamic _totalTime = 0;
+  dynamic _totalTime = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.storage.readStartFile().then((value) {
+      setState(() {
+        _startTime = value;
+        if (value != 0) {
+          _inThePlace = true;
+        }
+      });
+    });
+    widget.storage.readTotalFile().then((value) {
+      setState(() {
+        _totalTime = value;
+      });
+    });
+  }
+
+  Future<File> _setStartTime(bool startToZeroMod) {
+    if (startToZeroMod) {
+      return widget.storage.writeStartTime(0);
+    } else {
+      return widget.storage.writeStartTime(_startTime);
+    }
+  }
+
+  Future<File> _totalTimeSum() {
+    // Write the variable as a string to the file.
+    return widget.storage.writeTotalTime(_totalTime);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +151,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     _totalTime += (_endTime - _startTime) / 60;
                     _startTime = 0;
                     _endTime = 0;
+                    _totalTimeSum();
+                    _setStartTime(true);
                   }
                   else {
                     _iconButton = Icons.login;
                     _inThePlace = true;
                     _startTime = getTime();
+                    _setStartTime(false);
                   }
                 });
               },
