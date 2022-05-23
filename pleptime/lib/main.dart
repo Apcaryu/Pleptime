@@ -107,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _startTime = value;
         if (value != 0) {
           _inThePlace = true;
+          _iconButton = Icons.logout;
         }
       });
     });
@@ -145,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
               IconButton(onPressed: () {
                 setState(() {
                   if (_inThePlace) {
-                    _iconButton = Icons.logout;
+                    _iconButton = Icons.login;
                     _inThePlace = false;
                     _endTime = getTime();
                     _totalTime += (_endTime - _startTime) / 60;
@@ -155,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     _setStartTime(true);
                   }
                   else {
-                    _iconButton = Icons.login;
+                    _iconButton = Icons.logout;
                     _inThePlace = true;
                     _startTime = getTime();
                     _setStartTime(false);
