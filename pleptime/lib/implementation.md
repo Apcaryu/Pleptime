@@ -2,7 +2,7 @@
 - Sauvegarder le temps de présence
 - Afficher le temps de présence total
 - Réinitialiser le temps tout les premier du mois
-
+- Avoir un boutton pour les jour ferié
 
 ## Fonctionnalitées implémentées
 - Un boutton pour set l'heure d'entré et l'heure de sortie du batiment
