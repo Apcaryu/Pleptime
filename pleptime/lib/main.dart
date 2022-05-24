@@ -127,8 +127,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<File> _totalTimeSum() {
-    // Write the variable as a string to the file.
-    return widget.storage.writeTotalTime(_totalTime);
+      // Write the variable as a string to the file.
+      return widget.storage.writeTotalTime(_totalTime);
   }
 
   @override
@@ -165,6 +165,14 @@ class _MyHomePageState extends State<MyHomePage> {
               },
                   icon: Icon(_iconButton)
               ),
+              IconButton(onPressed:() {
+                setState(() {
+                  _totalTime += 7.0;
+                  _totalTimeSum();
+                });
+              },
+              icon: const Icon(Icons.add_circle),
+              )
             ],
           ),
       ),
