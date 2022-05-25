@@ -37,6 +37,11 @@ class TimeStorage {
     return File('$path/totalTime.txt');
   }
 
+  Future<File> get _currentMonthFile async {
+    final path = await _localPath;
+    return File('$path/currentMonth.txt');
+  }
+
   // read files
   Future<int> readStartFile() async {
     try {
@@ -66,6 +71,18 @@ class TimeStorage {
     }
   }
 
+  Future<int> readMonthFile() async {
+    try {
+      final monthFile = await _currentMonthFile;
+
+      final contents = await monthFile.readAsString();
+
+      return int.parse(contents);
+    } catch (e) {
+      return 0;
+    }
+  }
+
   // write files
   Future<File> writeStartTime(int time) async {
     final file = await _startTimeFile;
@@ -79,6 +96,12 @@ class TimeStorage {
 
     // Write the file
     return file.writeAsString('$time');
+  }
+
+  Future<File> writeCurrentMonth(int month) async {
+    final file = await _currentMonthFile;
+
+    return file.writeAsString('$month');
   }
 }
 
@@ -98,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
   dynamic _startTime = 0;
   dynamic _endTime = 0;
   dynamic _totalTime = 0.0;
+  dynamic _currentMonth = 0;
 
   @override
   void initState() {
@@ -116,6 +140,20 @@ class _MyHomePageState extends State<MyHomePage> {
         _totalTime = value;
       });
     });
+  widget.storage.readMonthFile().then((value) {
+    setState(() {
+      if (value < 1 && 12 < value) {
+        _currentMonth = getTime(1);
+        _setCurrentMonth();
+      } else {
+        _currentMonth = getTime(1);
+        if (value != _currentMonth) {
+          _totalTime = 0.0;
+          _totalTimeSum();
+        }
+      }
+    });
+  });
   }
 
   Future<File> _setStartTime(bool startToZeroMod) {
@@ -129,6 +167,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<File> _totalTimeSum() {
       // Write the variable as a string to the file.
       return widget.storage.writeTotalTime(_totalTime);
+  }
+
+  Future<File> _setCurrentMonth() {
+    // Write the variable as a string to the file.
+    return widget.storage.writeCurrentMonth(_currentMonth);
   }
 
   @override
@@ -148,7 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (_inThePlace) {
                     _iconButton = Icons.login;
                     _inThePlace = false;
-                    _endTime = getTime();
+                    _endTime = getTime(0);
                     _totalTime += (_endTime - _startTime) / 60;
                     _startTime = 0;
                     _endTime = 0;
@@ -158,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   else {
                     _iconButton = Icons.logout;
                     _inThePlace = true;
-                    _startTime = getTime();
+                    _startTime = getTime(0);
                     _setStartTime(false);
                   }
                 });
@@ -172,7 +215,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
               icon: const Icon(Icons.add_circle),
-              )
+              ),
+              Text("$_currentMonth"),
             ],
           ),
       ),
@@ -180,12 +224,17 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-dynamic getTime() {
+dynamic getTime(int mod) {
   final minutes = DateTime.now().minute;
   final hour = DateTime.now().hour;
   final total = (hour * 60) + minutes;
+  final currentMonth = DateTime.now().month;
 
-  return total;
+  if (mod == 0) {
+    return total;
+  } else {
+    return currentMonth;
+  }
 }
 
 class ColorTheme {
