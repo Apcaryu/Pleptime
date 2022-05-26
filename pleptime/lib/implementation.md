@@ -9,6 +9,9 @@
 - Réinitialiser le temps tout les premier du mois
 - Avoir un boutton pour les jour ferié
 
+## Fonctionnalitées obsolettes
+- Bouton pour les jours ferié
+
 ## Ce dont j'ai besoin
 - D'un moyen de sauvegarder le temps de présence
 - D'un moyen de sauvegarder l'état du boutton de présence
