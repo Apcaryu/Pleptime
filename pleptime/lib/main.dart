@@ -208,14 +208,6 @@ class _MyHomePageState extends State<MyHomePage> {
               },
                   icon: Icon(_iconButton)
               ),
-              IconButton(onPressed:() {
-                setState(() {
-                  _totalTime += 7.0;
-                  _totalTimeSum();
-                });
-              },
-              icon: const Icon(Icons.add_circle),
-              ),
               Text("$_currentMonth"),
             ],
           ),
