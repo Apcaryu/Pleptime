@@ -118,7 +118,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool _inThePlace = false;
-  String buttonText = 'IN PLACE';
+  String _buttonText = 'IN PLACE';
   dynamic _iconButton = Icons.login;
   dynamic _startTime = 0;
   dynamic _endTime = 0;
@@ -232,6 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         onPressed: () {
                             setState(() {
                               if (_inThePlace) {
+                                _buttonText = 'IN PLACE';
                                 _iconButton = Icons.login;
                                 _inThePlace = false;
                                 _endTime = getTime(0);
@@ -243,6 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 _setStartTime(true);
                               }
                               else {
+                                _buttonText = 'OUT PLACE';
                                 _iconButton = Icons.logout;
                                 _inThePlace = true;
                                 _startTime = getTime(0);
@@ -251,7 +253,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             });
                         },
                         icon: Icon(_iconButton),
-                        label: const Text("IN PLACE"),
+                        label: Text(_buttonText),
                         style: ElevatedButton.styleFrom(
                           primary: ColorTheme()._feedbackColor,
                         )
