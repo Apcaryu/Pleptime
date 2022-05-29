@@ -152,8 +152,9 @@ class _MyHomePageState extends State<MyHomePage> {
         _setCurrentMonth();
       } else {
         _currentMonth = getTime(1);
-        if (value != _currentMonth && (value < 1 && 12 < value)) {
-          _totalTime = 0.0;
+        if (value != _currentMonth && (1 <= value && value <= 12)) {
+          _totalTime = 0;
+          _totalTimeRound = _totalTime.round;
           _totalTimeSum();
         }
         _setCurrentMonth();
