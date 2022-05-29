@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
@@ -119,6 +118,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool _inThePlace = false;
   String _buttonText = 'IN PLACE';
+  String _startTimeText = '--:--';
   dynamic _iconButton = Icons.login;
   dynamic _startTime = 0;
   dynamic _endTime = 0;
@@ -135,6 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
         if (value != 0) {
           _inThePlace = true;
           _iconButton = Icons.logout;
+          _startTimeText = setStartTimeString(_startTime);
         }
       });
     });
@@ -216,6 +217,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icon(_iconButton)
               ),
               Text("$_currentMonth"),
+              Card(
+                color: ColorTheme()._secondaryColorDark,
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 200,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Heure d'arrivée:", textScaleFactor: 1.5,),
+                      const Padding(padding: EdgeInsets.all(20)),
+                      Text(_startTimeText, textScaleFactor: 2, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold),),
+                      const Padding(padding: EdgeInsets.all(20)),
+                    ],
+                  ),
+                ),
+              ),
               // Card for totalTime
               Card(
                 color: ColorTheme()._secondaryColorDark,
@@ -240,6 +257,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 _totalTime += (_endTime - _startTime) / 60;
                                 _totalTimeRound = _totalTime.round();
                                 _startTime = 0;
+                                _startTimeText = setStartTimeString(_startTime);
                                 _endTime = 0;
                                 _totalTimeSum();
                                 _setStartTime(true);
@@ -250,6 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 _inThePlace = true;
                                 _startTime = getTime(0);
                                 _setStartTime(false);
+                                _startTimeText = setStartTimeString(_startTime);
                               }
                             });
                         },
@@ -280,6 +299,16 @@ dynamic getTime(int mod) {
     return total;
   } else {
     return currentMonth;
+  }
+}
+
+String setStartTimeString(int startTime) {
+  final minutes = DateTime.now().minute;
+  final hour = DateTime.now().hour;
+  if (startTime != 0) {
+    return "$hour:$minutes";
+  } else {
+    return "--:--";
   }
 }
 
