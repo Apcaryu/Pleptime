@@ -202,7 +202,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       const Text("Heure d'arrivée:", textScaleFactor: 1.5,),
                       const Padding(padding: EdgeInsets.all(20)),
-                      Text(_startTimeText, textScaleFactor: 2, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold),),
+                      Text(_startTimeText,
+                        textScaleFactor: 2,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       const Padding(padding: EdgeInsets.all(20)),
                     ],
                   ),
@@ -219,7 +223,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       const Padding(padding: EdgeInsets.all(10)),
                       const Text("Temps de présence:", textScaleFactor: 1.5,),
                       const Padding(padding: EdgeInsets.all(20)),
-                      Text("$_totalTimeRound H", textScaleFactor: 2, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold),),
+                      Text("$_totalTimeRound H",
+                        textScaleFactor: 2,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       const Padding(padding: EdgeInsets.all(10)),
                       ElevatedButton.icon(
                         onPressed: () {
