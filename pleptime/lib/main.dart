@@ -189,6 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("$_startTime + $_endTime = $_totalTime H"),
               IconButton(onPressed: () {
