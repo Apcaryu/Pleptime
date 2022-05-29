@@ -192,31 +192,6 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("$_startTime + $_endTime = $_totalTime H"),
-              IconButton(onPressed: () {
-                setState(() {
-                  if (_inThePlace) {
-                    _iconButton = Icons.login;
-                    _inThePlace = false;
-                    _endTime = getTime(0);
-                    _totalTime += (_endTime - _startTime) / 60;
-                    _totalTimeRound = _totalTime.round();
-                    _startTime = 0;
-                    _endTime = 0;
-                    _totalTimeSum();
-                    _setStartTime(true);
-                  }
-                  else {
-                    _iconButton = Icons.logout;
-                    _inThePlace = true;
-                    _startTime = getTime(0);
-                    _setStartTime(false);
-                  }
-                });
-              },
-                  icon: Icon(_iconButton)
-              ),
-              Text("$_currentMonth"),
               Card(
                 color: ColorTheme()._secondaryColorDark,
                 child: SizedBox(
