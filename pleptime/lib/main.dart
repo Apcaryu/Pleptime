@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
@@ -117,10 +118,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool _inThePlace = false;
+  String buttonText = 'IN PLACE';
   dynamic _iconButton = Icons.login;
   dynamic _startTime = 0;
   dynamic _endTime = 0;
   dynamic _totalTime = 0.0;
+  dynamic _totalTimeRound = 0.0;
   dynamic _currentMonth = 0;
 
   @override
@@ -138,6 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
     widget.storage.readTotalFile().then((value) {
       setState(() {
         _totalTime = value;
+        _totalTimeRound = _totalTime.round();
       });
     });
   widget.storage.readMonthFile().then((value) {
@@ -147,10 +151,11 @@ class _MyHomePageState extends State<MyHomePage> {
         _setCurrentMonth();
       } else {
         _currentMonth = getTime(1);
-        if (value != _currentMonth) {
+        if (value != _currentMonth && (value < 1 && 12 < value)) {
           _totalTime = 0.0;
           _totalTimeSum();
         }
+        _setCurrentMonth();
       }
     });
   });
@@ -193,6 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     _inThePlace = false;
                     _endTime = getTime(0);
                     _totalTime += (_endTime - _startTime) / 60;
+                    _totalTimeRound = _totalTime.round();
                     _startTime = 0;
                     _endTime = 0;
                     _totalTimeSum();
@@ -209,6 +215,51 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icon(_iconButton)
               ),
               Text("$_currentMonth"),
+              // Card for totalTime
+              Card(
+                color: ColorTheme()._secondaryColorDark,
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 200,
+                  child: Column(
+                    children: [
+                      const Padding(padding: EdgeInsets.all(10)),
+                      const Text("Temps de présence:", textScaleFactor: 1.5,),
+                      const Padding(padding: EdgeInsets.all(20)),
+                      Text("$_totalTimeRound H", textScaleFactor: 2, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold),),
+                      const Padding(padding: EdgeInsets.all(10)),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                            setState(() {
+                              if (_inThePlace) {
+                                _iconButton = Icons.login;
+                                _inThePlace = false;
+                                _endTime = getTime(0);
+                                _totalTime += (_endTime - _startTime) / 60;
+                                _totalTimeRound = _totalTime.round();
+                                _startTime = 0;
+                                _endTime = 0;
+                                _totalTimeSum();
+                                _setStartTime(true);
+                              }
+                              else {
+                                _iconButton = Icons.logout;
+                                _inThePlace = true;
+                                _startTime = getTime(0);
+                                _setStartTime(false);
+                              }
+                            });
+                        },
+                        icon: Icon(_iconButton),
+                        label: const Text("IN PLACE"),
+                        style: ElevatedButton.styleFrom(
+                          primary: ColorTheme()._feedbackColor,
+                        )
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
       ),
@@ -232,5 +283,6 @@ dynamic getTime(int mod) {
 class ColorTheme {
   final _mainColor = Colors.black;
   final _secondaryColor = Colors.white;
+  final _secondaryColorDark = Colors.white10;
   final _feedbackColor = Colors.deepOrange;
 }
