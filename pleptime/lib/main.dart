@@ -287,9 +287,12 @@ dynamic getTime(int mod) {
 }
 
 String setStartTimeString(int startTime) {
-  final minutes = DateTime.now().minute;
-  final hour = DateTime.now().hour;
   if (startTime != 0) {
+    final minutes = startTime % 60;
+    final hour = ((startTime - minutes) / 60).floor();
+    if (minutes < 10) {
+      return "$hour:0$minutes";
+    }
     return "$hour:$minutes";
   } else {
     return "--:--";
