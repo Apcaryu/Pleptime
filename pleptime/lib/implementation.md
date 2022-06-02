@@ -1,5 +1,5 @@
 ## Fonctionnalitées à implementées
-- Une interface agréable
+
 
 ## Fonctionnalitées implémentées
 - Un boutton pour set l'heure d'entré et l'heure de sortie du batiment
@@ -7,13 +7,14 @@
 - Afficher le temps de présence total
 - Sauvegarder le temps de présence
 - Réinitialiser le temps tout les premier du mois
-- Avoir un boutton pour les jour ferié
+- Une interface agréable
 
 ## Fonctionnalitées obsolettes
 - Bouton pour les jours ferié
 
+## Probleme connu à resoudre
+- si l'heure d'arrver et de départ ne sont pas sur le même jour alors le calcul du temps total n'est pas bon
+- le reset en début de mois ne se fait pas correctement au lancement de l'app
+
 ## Ce dont j'ai besoin
-- D'un moyen de sauvegarder le temps de présence
-- D'un moyen de sauvegarder l'état du boutton de présence
-- D'un moyen de récupérer la date
-- D'un moyen de récuperer l'heure
+
