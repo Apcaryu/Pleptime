@@ -153,6 +153,11 @@ class _MyHomePageState extends State<MyHomePage> {
       } else {
         _currentMonth = getTime(1);
         if (value != _currentMonth && (1 <= value && value <= 12)) {
+          if (_inThePlace) {
+            _startTime = 1;
+          } else {
+            _startTime = 0;
+          }
           _totalTime = 0;
           _totalTimeRound = _totalTime.round;
           _totalTimeSum();
