@@ -295,10 +295,19 @@ String setStartTimeString(int startTime) {
   if (startTime != 0) {
     final minutes = startTime % 60;
     final hour = ((startTime - minutes) / 60).floor();
+    dynamic txtMinutes = "";
+    dynamic txtHour = "";
     if (minutes < 10) {
-      return "$hour:0$minutes";
+      txtMinutes = "0$minutes";
+    } else {
+      txtMinutes = "$minutes";
     }
-    return "$hour:$minutes";
+    if (hour < 10) {
+      txtHour = "0$hour";
+    } else {
+      txtHour = "$hour";
+    }
+    return "$txtHour:$txtMinutes";
   } else {
     return "--:--";
   }
