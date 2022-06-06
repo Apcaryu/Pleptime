@@ -239,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 _iconButton = Icons.login;
                                 _inThePlace = false;
                                 _endTime = getTime(0);
-                                _totalTime += (_endTime - _startTime) / 60;
+                                _totalTime = setTotalTime(_totalTime, _startTime, _endTime);
                                 _totalTimeRound = _totalTime.round();
                                 _startTime = 0;
                                 _startTimeText = setStartTimeString(_startTime);
@@ -306,6 +306,17 @@ String setStartTimeString(int startTime) {
     return "$txtHour:$txtMinutes";
   } else {
     return "--:--";
+  }
+}
+
+double setTotalTime(double _totalTime, int _startTime, int _endTime) {
+  if (_endTime < _startTime) {
+    _totalTime += (1440 - _startTime) / 60; // 1440 minutes = 24 hour
+    _totalTime += _endTime / 60;
+    return _totalTime;
+  } else {
+    _totalTime += (_endTime - _startTime) / 60;
+    return _totalTime;
   }
 }
 
