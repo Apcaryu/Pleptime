@@ -148,23 +148,18 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   widget.storage.readMonthFile().then((value) {
     setState(() {
-      if (value < 1 && 12 < value) {
-        _currentMonth = getTime(1);
-        _setCurrentMonth();
-      } else {
-        _currentMonth = getTime(1);
-        if (value != _currentMonth && (1 <= value && value <= 12)) {
-          if (_inThePlace) {
-            _startTime = 1;
-          } else {
-            _startTime = 0;
-          }
-          _totalTime = 0;
-          _totalTimeRound = _totalTime.round;
-          _totalTimeSum();
+      _currentMonth = getTime(1);
+      if (value != _currentMonth && (1 <= value && value <= 12)) {
+        if (_inThePlace) {
+          _startTime = 1;
+        } else {
+          _startTime = 0;
         }
-        _setCurrentMonth();
+        _totalTime = 0.0;
+        _totalTimeRound = 0;
+        _totalTimeSum();
       }
+      _setCurrentMonth();
     });
   });
   }
