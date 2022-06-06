@@ -136,6 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _inThePlace = true;
           _iconButton = Icons.logout;
           _startTimeText = setStartTimeString(_startTime);
+          _buttonText = 'OUT PLACE';
         }
       });
     });
