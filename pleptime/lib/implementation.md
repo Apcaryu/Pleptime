@@ -13,8 +13,6 @@
 - Bouton pour les jours ferié
 
 ## Probleme connu à resoudre
-- si l'heure d'arrver et de départ ne sont pas sur le même jour alors le calcul du temps total n'est pas bon
-- le reset en début de mois ne se fait pas correctement au lancement de l'app
 
 ## Ce dont j'ai besoin
 
