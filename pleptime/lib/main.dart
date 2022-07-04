@@ -237,52 +237,43 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const Padding(padding: EdgeInsets.all(10)),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                            setState(() {
-                              if (_inThePlace) {
-                                _buttonText = 'IN PLACE';
-                                _iconButton = Icons.login;
-                                _inThePlace = false;
-                                _endTime = getTime(0);
-                                _totalTime = setTotalTime(_totalTime, _startTime, _endTime);
-                                _totalTimeRound = _totalTime.round();
-                                _startTime = 0;
-                                _startTimeText = setStartTimeString(_startTime);
-                                _endTime = 0;
-                                _totalTimeSum();
-                                _setStartTime(true);
-                              }
-                              else {
-                                _buttonText = 'OUT PLACE';
-                                _iconButton = Icons.logout;
-                                _inThePlace = true;
-                                _startTime = getTime(0);
-                                _setStartTime(false);
-                                _startTimeText = setStartTimeString(_startTime);
-                              }
-                            });
-                        },
-                        icon: Icon(_iconButton),
-                        label: Text(_buttonText),
-                        style: ElevatedButton.styleFrom(
-                          primary: ColorTheme()._feedbackColor,
-                        )
-                      ),
+
+
                     ],
                   ),
                 ),
               ),
-              FloatingActionButton(
-                backgroundColor: ColorTheme()._feedbackColor,
-                onPressed: () {
-
-                },
-                child: Icon(Icons.login),
-              ),
-
                 ],
               ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: ColorTheme()._feedbackColor,
+        onPressed: () {
+          setState(() {
+            if (_inThePlace) {
+              _buttonText = 'IN PLACE';
+              _iconButton = Icons.play_arrow;
+              _inThePlace = false;
+              _endTime = getTime(0);
+              _totalTime = setTotalTime(_totalTime, _startTime, _endTime);
+              _totalTimeRound = _totalTime.round();
+              _startTime = 0;
+              _startTimeText = setStartTimeString(_startTime);
+              _endTime = 0;
+              _totalTimeSum();
+              _setStartTime(true);
+            }
+            else {
+              _buttonText = 'OUT PLACE';
+              _iconButton = Icons.stop;
+              _inThePlace = true;
+              _startTime = getTime(0);
+              _setStartTime(false);
+              _startTimeText = setStartTimeString(_startTime);
+            }
+          });
+        },
+        child: Icon(_iconButton),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
