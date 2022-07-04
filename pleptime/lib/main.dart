@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
+import 'statePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +17,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       home: MyHomePage(title: 'Pleptime', storage: TimeStorage(),),
     );
+    Navigator.push(context,
+        MaterialPageRoute<void>(
+            builder: (BuildContext context) {
+          return MyStatPage(title: 'Stat');
+        }));
   }
 }
 
@@ -267,8 +273,41 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-            ],
-          ),
+              FloatingActionButton(
+                backgroundColor: ColorTheme()._feedbackColor,
+                onPressed: () {
+
+                },
+                child: Icon(Icons.login),
+              ),
+
+                ],
+              ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: ColorTheme()._mainColor,
+        selectedItemColor: ColorTheme()._feedbackColor,
+        unselectedItemColor: ColorTheme()._secondaryColor,
+        onTap: (value) {
+          if (value == 1) {
+            Navigator.push(context,
+                MaterialPageRoute<void>(
+                    builder: (BuildContext context) {
+                      return MyStatPage(title: 'Stat');
+                    }));
+          }
+        },
+        items: [
+        BottomNavigationBarItem(
+        label: 'Timer',
+        icon: Icon(Icons.access_time),
+      ),
+        BottomNavigationBarItem(
+          label: 'List',
+          icon: Icon(Icons.list),
+        ),
+      ]
       ),
     );
   }
