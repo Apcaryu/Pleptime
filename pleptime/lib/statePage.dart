@@ -15,6 +15,11 @@ class _MyStatPageState extends State<MyStatPage> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        title: Text("Stats"),
+      ),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.black,
