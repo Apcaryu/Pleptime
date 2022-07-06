@@ -125,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _inThePlace = false;
   String _buttonText = 'IN PLACE';
   String _startTimeText = '--:--';
-  dynamic _iconButton = Icons.login;
+  dynamic _iconButton = Icons.play_arrow;
   dynamic _startTime = 0;
   dynamic _endTime = 0;
   dynamic _totalTime = 0.0;
