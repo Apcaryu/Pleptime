@@ -5,13 +5,28 @@ import 'colorTheme.dart';
 import 'timeStorage.dart';
 
 class MyStatPage extends StatefulWidget {
-  const MyStatPage({super.key, title});
+  const MyStatPage({super.key, title, required this.storage});
+
+  final TimeStorage storage;
 
   @override
   State<MyStatPage> createState() => _MyStatPageState();
 }
 
 class _MyStatPageState extends State<MyStatPage> {
+
+  dynamic _totalTime;
+  dynamic _totalTimeRound;
+
+  @override
+  void initState() {
+    widget.storage.readTotalFile().then((value) {
+      setState(() {
+        _totalTime = value;
+        _totalTimeRound = _totalTime.round();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context){
@@ -20,6 +35,27 @@ class _MyStatPageState extends State<MyStatPage> {
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
         title: Text("Stats"),
+      ),
+      body: Center(
+        child: Card(
+          color: Colors.white10,
+          child: SizedBox(
+            width: double.infinity,
+            height: 200,
+            child: Column(
+              children: [
+                Padding(padding: EdgeInsets.all(10)),
+                Text("Temps de présence:", textScaleFactor: 1.5,),
+                Padding(padding: EdgeInsets.all(20)),
+                Text("$_totalTimeRound H",
+                  textScaleFactor: 2,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     Navigator.push(context,
         MaterialPageRoute<void>(
             builder: (BuildContext context) {
-          return MyStatPage(title: 'Stat');
+          return MyStatPage(title: 'Stat', storage: TimeStorage(),);
         }));
   }
 }
@@ -151,7 +151,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const Padding(padding: EdgeInsets.all(10)),
 
 
                     ],
@@ -200,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Navigator.push(context,
                 MaterialPageRoute<void>(
                     builder: (BuildContext context) {
-                      return MyStatPage(title: 'Stat');
+                      return MyStatPage(title: 'Stat', storage: TimeStorage(),);
                     }));
           }
         },
