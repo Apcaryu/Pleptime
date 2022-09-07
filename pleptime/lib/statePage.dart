@@ -52,6 +52,21 @@ class _MyStatPageState extends State<MyStatPage> {
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(onPressed: (){},
+                        child: Text("-"),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.deepOrange),
+                    ),
+                    ElevatedButton(onPressed: (){},
+                        child: Text("+"),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.deepOrange,
+                        ),)
+                  ],
+                ),
               ],
             ),
           ),
