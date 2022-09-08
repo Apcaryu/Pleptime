@@ -60,6 +60,7 @@ class _MyStatPageState extends State<MyStatPage> {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.deepOrange),
                     ),
+                    Padding(padding: EdgeInsets.all(30)),
                     ElevatedButton(onPressed: (){},
                         child: Text("+"),
                         style: ElevatedButton.styleFrom(
