@@ -3,6 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'statePage.dart';
 import 'timeStorage.dart';
+import 'global.dart' as global;
 
 void main() {
   runApp(const MyApp());
@@ -46,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   dynamic _totalTime = 0.0;
   dynamic _totalTimeRound = 0.0;
   dynamic _currentMonth = 0;
+  dynamic _actualTotalTime = 0.0;
 
   @override
   void initState() {
@@ -163,13 +165,18 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: ColorTheme()._feedbackColor,
         onPressed: () {
+          widget.storage.readTotalFile().then((value) {
+            setState((){
+              _actualTotalTime = value;
+            });
+          });
           setState(() {
             if (_inThePlace) {
               _buttonText = 'IN PLACE';
               _iconButton = Icons.play_arrow;
               _inThePlace = false;
               _endTime = getTime(0);
-              _totalTime = setTotalTime(_totalTime, _startTime, _endTime);
+              _totalTime = setTotalTime(_totalTime, _startTime, _endTime, _actualTotalTime);
               _totalTimeRound = _totalTime.round();
               _startTime = 0;
               _startTimeText = setStartTimeString(_startTime);
@@ -253,7 +260,10 @@ String setStartTimeString(int startTime) {
   }
 }
 
-double setTotalTime(double _totalTime, int _startTime, int _endTime) {
+double setTotalTime(double _totalTime, int _startTime, int _endTime, double _actualTotalTime) {
+  if (_totalTime < _actualTotalTime) {
+    _totalTime = _actualTotalTime;
+  }
   if (_endTime < _startTime) {
     _totalTime += (1440 - _startTime) / 60; // 1440 minutes = 24 hour
     _totalTime += _endTime / 60;

@@ -55,13 +55,23 @@ class _MyStatPageState extends State<MyStatPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(onPressed: (){},
+                    ElevatedButton(onPressed: (){
+                      setState((){
+                        _totalTimeRound -= 1;
+                      });
+                    },
                         child: Text("-"),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.deepOrange),
                     ),
                     Padding(padding: EdgeInsets.all(30)),
-                    ElevatedButton(onPressed: (){},
+                    ElevatedButton(onPressed: (){
+                      setState((){
+                        _totalTimeRound += 1;
+                        _totalTime += 1;
+                        TimeStorage().writeTotalTime(_totalTime);
+                      });
+                    },
                         child: Text("+"),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.deepOrange,
