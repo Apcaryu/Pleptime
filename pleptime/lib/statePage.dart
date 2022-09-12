@@ -57,7 +57,9 @@ class _MyStatPageState extends State<MyStatPage> {
                   children: [
                     ElevatedButton(onPressed: (){
                       setState((){
+                        _totalTime -= 1;
                         _totalTimeRound -= 1;
+                        TimeStorage().writeTotalTime(_totalTime);
                       });
                     },
                         child: Text("-"),

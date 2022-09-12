@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _startTime = value;
         if (value != 0) {
           _inThePlace = true;
-          _iconButton = Icons.logout;
+          _iconButton = Icons.stop;
           _startTimeText = setStartTimeString(_startTime);
           _buttonText = 'OUT PLACE';
         }
@@ -153,8 +153,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-
-
                     ],
                   ),
                 ),
@@ -261,9 +259,11 @@ String setStartTimeString(int startTime) {
 }
 
 double setTotalTime(double _totalTime, int _startTime, int _endTime, double _actualTotalTime) {
-  if (_totalTime < _actualTotalTime) {
+  print("$_totalTime | $_actualTotalTime");
+  if (_totalTime != _actualTotalTime) {
     _totalTime = _actualTotalTime;
   }
+  print("$_totalTime | $_actualTotalTime");
   if (_endTime < _startTime) {
     _totalTime += (1440 - _startTime) / 60; // 1440 minutes = 24 hour
     _totalTime += _endTime / 60;
