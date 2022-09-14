@@ -65,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     widget.storage.readTotalFile().then((value) {
       setState(() {
+        _actualTotalTime = value;
         _totalTime = value;
         _totalTimeRound = _totalTime.round();
       });
